@@ -14,8 +14,7 @@ from dotenv import load_dotenv
 # LangChain v1.0+ imports
 from langchain_community.document_loaders import WebBaseLoader
 from langchain_community.vectorstores import Chroma
-from langchain_community.embeddings import HuggingFaceEmbeddings
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
@@ -27,7 +26,7 @@ load_dotenv()
 # --- Configuration ---
 script_dir = os.path.dirname(os.path.abspath(__file__))
 CHROMA_DB_PATH = os.path.join(script_dir, "chroma_db")
-EMBEDDING_MODEL_NAME = "all-MiniLM-L6-v2"
+EMBEDDING_MODEL_NAME = "gemini-embedding-001"
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 
 # --- Initialization ---
@@ -40,7 +39,7 @@ if not GEMINI_API_KEY:
     raise ValueError("GEMINI_API_KEY not found in environment variables. Please create a .env file.")
 
 print("Loading embedding model...")
-embeddings = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL_NAME)
+embeddings = GoogleGenerativeAIEmbeddings(model=EMBEDDING_MODEL_NAME)
 print("Embedding model loaded.")
 
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
