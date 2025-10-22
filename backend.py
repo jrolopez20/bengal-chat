@@ -2,7 +2,7 @@
 # pip install -r requirements.txt
 #
 # --- To Run ---
-# 1. Create a .env file with your GOOGLE_API_KEY (see README.md)
+# 1. Create a .env file with your GEMINI_API_KEY (see README.md)
 # 2. Run the command: flask run
 # 3. Navigate to http://127.0.0.1:5000 in your browser
 
@@ -28,7 +28,7 @@ load_dotenv()
 script_dir = os.path.dirname(os.path.abspath(__file__))
 CHROMA_DB_PATH = os.path.join(script_dir, "chroma_db")
 EMBEDDING_MODEL_NAME = "all-MiniLM-L6-v2"
-GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 
 # --- Initialization ---
 # Serve the static frontend files
@@ -36,8 +36,8 @@ app = Flask(__name__, static_folder='static')
 CORS(app)
 
 # Configure the Gemini API client
-if not GOOGLE_API_KEY:
-    raise ValueError("GOOGLE_API_KEY not found in environment variables. Please create a .env file.")
+if not GEMINI_API_KEY:
+    raise ValueError("GEMINI_API_KEY not found in environment variables. Please create a .env file.")
 
 print("Loading embedding model...")
 embeddings = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL_NAME)
